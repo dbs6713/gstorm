@@ -2,6 +2,7 @@
 .DEFAULT_GOAL=clean
 
 # Variables
+CC=go
 ALL_PACKAGES ?= $(shell go list ./... | grep -v /vendor/)
 APP_NAME ?= gstorm
 BUILD_TIME ?= $(shell date +%FT%T%z)
@@ -13,9 +14,9 @@ bld.cli: clean
 	@echo Building $(VERSION)...
 	#-glide install
 	-mkdir -p ./bld
-	GOOS=linux GOARCH=amd64 go build -a -o ./bld/$(APP_NAME).linux-amd64 -ldflags='-s -w -X github.com/donbstringham/spider/ver.Version=$(VERSION) -X github.com/donbstringham/spider/ver.Buildtime=$(BUILD_TIME)' ./
-	GOOS=darwin GOARCH=amd64 go build -a -o ./bld/$(APP_NAME).darwin-amd64 -ldflags='-s -w -X github.com/donbstringham/spider/ver.Version=$(VERSION) -X github.com/donbstringham/spider/ver.Buildtime=$(BUILD_TIME)' ./
-	GOOS=windows GOARCH=amd64 go build -a -o ./bld/$(APP_NAME).windows-amd64.exe -ldflags='-s -w -X github.com/donbstringham/spider/ver.Version=$(VERSION) -X github.com/donbstringham/spider/ver.Buildtime=$(BUILD_TIME)' ./
+	#GOOS=linux GOARCH=amd64 $(CC) build -a -o ./bld/$(APP_NAME).linux-amd64 -ldflags='-s -w -X github.com/donbstringham/$(APP_NAME)/ver.Version=$(VERSION) -X github.com/donbstringham/$(APP_NAME)/ver.Buildtime=$(BUILD_TIME)' ./
+	GOOS=darwin GOARCH=amd64 $(CC) build -a -o ./bld/$(APP_NAME).darwin-amd64 -ldflags='-s -w -X github.com/donbstringham/$(APP_NAME)/ver.Version=$(VERSION) -X github.com/donbstringham/$(APP_NAME)/ver.Buildtime=$(BUILD_TIME)' ./
+	#GOOS=windows GOARCH=amd64 $(CC) build -a -o ./bld/$(APP_NAME).windows-amd64.exe -ldflags='-s -w -X github.com/donbstringham/$(APP_NAME)/ver.Version=$(VERSION) -X github.com/donbstringham/$(APP_NAME)/ver.Buildtime=$(BUILD_TIME)' ./
 
 	cd ./bld && find . -name 'final*' | xargs -I{} tar czf {}.tar.gz {}
 	cd ./bld && shasum -a 256 * > sha256sum.txt

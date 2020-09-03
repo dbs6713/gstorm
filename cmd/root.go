@@ -34,7 +34,7 @@ var RootCmd = &cobra.Command{
 Here are few examples of CLI parameters:
 
 $ gstorm help		- Prints help.
-$ gstorm Version	- Print current version.`,
+$ gstorm version	- Print current version.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
