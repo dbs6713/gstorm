@@ -29,6 +29,9 @@ clean:
 clean.vendor:
 	-rm -r ./vendor
 
+get.vendor:
+	glide install
+
 info:
 	@echo VERSION: $(VERSION)
 	@echo REPO_OWNER: $(REPO_OWNER)
